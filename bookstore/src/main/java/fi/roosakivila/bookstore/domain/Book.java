@@ -1,27 +1,30 @@
 package fi.roosakivila.bookstore.domain;
 
-public class Book {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String isbn;
     private String title;
     private String author;
     private Integer publicationYear;
-    private String isbn;
-    private Integer price;
+    private double price;
 
-    public Book(String title, String author, Integer publicationYear, String isbn, Integer price) {
+    public Book() {
+    }
+
+    public Book(String title, String author, Integer publicationYear, String isbn, double price) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
-    }
-
-    public Book() {
-        this.title = null;
-        this.author = null;
-        this.publicationYear = null;
-        this.isbn = null;
-        this.price = null;
     }
 
     public String getTitle() {
@@ -56,7 +59,7 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public Integer getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -64,10 +67,18 @@ public class Book {
         this.price = price;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear + ", isbn=" + isbn
-                + ", price=" + price + "]";
+        return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", publicationYear="
+                + publicationYear + ", price=" + price + "]";
     }
 
 }
