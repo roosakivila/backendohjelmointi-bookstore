@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import fi.roosakivila.bookstore.domain.Book;
 import fi.roosakivila.bookstore.domain.BookRepository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BookController {
