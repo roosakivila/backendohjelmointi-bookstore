@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import fi.roosakivila.bookstore.domain.Book;
 import fi.roosakivila.bookstore.domain.BookRepository;
+import fi.roosakivila.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 
     private BookRepository bookRepository;
+    private CategoryRepository categoryRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     // GET request /index
@@ -34,6 +37,7 @@ public class BookController {
     @RequestMapping("/add")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addbook"; // addbook.html
     }
 
@@ -52,7 +56,10 @@ public class BookController {
     //  Edit book
     @GetMapping("/edit/{id}")
     public String modifyBook(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("book", bookRepository.findById(id));
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editbook"; // editbook.html
     }
 

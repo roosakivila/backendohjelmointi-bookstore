@@ -22,29 +22,26 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
 		return (args) -> {
 			log.info("save a couple of books");
-			repository.save(new Book("The Pragmatic Programmer", "Andrew Hunt", 1999, "9780201616224", 42.50));
-			repository.save(new Book("Clean Code", "Robert C. Martin", 2008, "9780132350884", 37.99));
+			Category category1 = new Category("Programming");
+			crepository.save(category1);
+			Category category2 = new Category("Comic");
+			crepository.save(category2);
+			Category category3 = new Category("Scifi");
+			crepository.save(category3);
+
+			repository
+					.save(new Book("The Pragmatic Programmer", "Andrew Hunt", 1999, "9780201616224", 42.50, category1));
+			repository.save(new Book("Clean Code", "Robert C. Martin", 2008, "9780132350884", 37.99, category1));
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());
 			}
-		};
-	}
-
-	@Bean
-	public CommandLineRunner categoryDemo(CategoryRepository repository) {
-		return (args) -> {
-			log.info("save a couple of categories");
-			repository.save(new Category("Programming"));
-			repository.save(new Category("Comic"));
-			repository.save(new Category("Scifi"));
-
 			log.info("fetch all categories");
-			for (Category category : repository.findAll()) {
+			for (Category category : crepository.findAll()) {
 				log.info(category.toString());
 			}
 		};

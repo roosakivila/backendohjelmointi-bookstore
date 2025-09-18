@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <title>Add category</title>
 </head>
 <body>
-    <h1>Create category</h1>
-<div>
-<form th:object="${category}" th:action="@{savecategory}" action="#" method="post">
-	<label for="name">Category name:</label>
-	<input type="text" id="name" th:field="*{name}" />
-	<input type="submit" value="Save"></input>
+    <div class="container mt-5">
+        <div class="card shadow-sm p-4">
+        <h1>Create category</h1>
+    <form th:object="${category}" th:action="@{savecategory}" action="#" method="post">
+        <div class="mb-3">
+	<label for="name" class="form-label">Category name:</label>
+	<input type="text" class="form-control" id="name" th:field="*{name}" />
+        </div>
+	<input type="submit" class="btn btn-success" value="Save"></input>
 </form>
+</div>
 </div>
     
 </body>
