@@ -1,5 +1,6 @@
 package fi.roosakivila.bookstore.web;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class BookController {
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         bookRepository.deleteById(id);
         return "redirect:../booklist";
@@ -63,4 +65,8 @@ public class BookController {
         return "editbook"; // editbook.html
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login"; // login.html
+    }
 }
