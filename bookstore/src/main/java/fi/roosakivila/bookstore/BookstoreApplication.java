@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.roosakivila.bookstore.domain.AppUser;
+import fi.roosakivila.bookstore.domain.AppUserRepository;
 import fi.roosakivila.bookstore.domain.Book;
 import fi.roosakivila.bookstore.domain.BookRepository;
 import fi.roosakivila.bookstore.domain.Category;
@@ -22,7 +24,8 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository,
+			AppUserRepository appUserRepository) {
 		return (args) -> {
 			log.info("save a couple of books");
 			Category category1 = new Category("Programming");
@@ -35,6 +38,14 @@ public class BookstoreApplication {
 			repository
 					.save(new Book("The Pragmatic Programmer", "Andrew Hunt", 1999, "9780201616224", 42.50, category1));
 			repository.save(new Book("Clean Code", "Robert C. Martin", 2008, "9780132350884", 37.99, category1));
+
+			// Create users: admin/admin user/user
+			AppUser user1 = new AppUser("user", "$2a$10$5dbwJ9VOYeDv4V9/XgzMFO1ABf6F.rHzRWB7uxUv4r4NPyewXRb9a",
+					"user@haagahelia.fi", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$9QCVr0qKt.lwnuj/xFAPWOdwBstPZUX73/NG/uVqrdiCd6PuzTagu",
+					"admin@haagahelia.fi", "ADMIN");
+			appUserRepository.save(user1);
+			appUserRepository.save(user2);
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
