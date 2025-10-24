@@ -1,5 +1,6 @@
 package fi.roosakivila.bookstore.web;
 
+import org.hibernate.mapping.List;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
